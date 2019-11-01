@@ -1,4 +1,4 @@
-let Task = require("./TaskModel.js");
+let Task = require("../models/TaskModel");
 
 // get all tasks - list
 exports.list = list = (req, res) => {

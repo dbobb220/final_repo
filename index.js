@@ -5,10 +5,10 @@ const port = 8080;
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
-const authMiddleWare = require("./authentication").authentication;
-const tasksRoutes = require("./tasks/TaskRoutes");
-const usersRoutes = require("./users/UserRoutes");
-const sessionRoutes = require("./session/SessionRoute");
+const authRoutes = require("./server/routes/AuthRoutes");
+const tasksRoutes = require("./server/routes/TaskRoutes");
+const usersRoutes = require("./server/routes/UserRoutes");
+const sessionRoutes = require("./server/routes/SessionRoute");
 
 dotenv.config();
 
@@ -23,19 +23,21 @@ db.once("open", function() {
   console.log(`Database connected`);
 });
 
-app.use(bodyParser.json());
 app.use(express.static("public"));
+app.use(bodyParser.json());
 app.use(usersRoutes);
 app.use(sessionRoutes);
+app.use(authRoutes);
+
 app.use(tasksRoutes);
 
 app.get("/ping", function(req, res) {
   return res.send("pong");
 });
 
-// app.get("/", function(req, res) {
-//   res.sendFile(path.join(__dirname, "public"));
-// });
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname + "/public/index.html"));
+});
 
 app.listen(process.env.PORT || port, () =>
   console.log(`Server listening on port ${port}!`)
