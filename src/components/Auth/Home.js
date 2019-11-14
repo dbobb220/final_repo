@@ -9,7 +9,7 @@ const Home = props => {
     <div className="home">
       <section className="promo">
         <h2>A virtual project management board</h2>
-        <img src={kanban} alt="image of kanban board" />
+        <img src={kanban} alt="kanban board example" />
       </section>
       <section className="auth">
         <div>
